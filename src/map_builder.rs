@@ -1,6 +1,7 @@
 use crate::prelude::*;
 const NUM_ROOMS: usize = 20;
 
+#[derive(Debug)]
 pub struct MapBuilder{
     pub map: Map,
     pub rooms: Vec<Rect>,
@@ -27,8 +28,7 @@ impl MapBuilder {
     }
 
     fn build_random_rooms(&mut self, rng: &mut RandomNumberGenerator){
-        let test = self.rooms.len();
-        while test < NUM_ROOMS{
+        while self.rooms.len() < NUM_ROOMS{
            let room = Rect::with_size(
                 rng.range(1, SCREEN_WIDTH - 10),
                 rng.range(1, SCREEN_HEIGHT - 10),
@@ -36,14 +36,14 @@ impl MapBuilder {
                 rng.range(2, 10),
             );
             let mut overlap = false;
-            for room in self.rooms.iter(){
-                if room.intersect(&room){
+            for r in self.rooms.iter(){
+                if r.intersect(&room){
                     overlap = true;
                 }
             }
             if !overlap{
                 room.for_each(|player|{
-                    if player.x > 0 && player.y > 0 && player.y < SCREEN_HEIGHT && player.x < SCREEN_WIDTH{
+                    if player.x > 0 && player.y > 0 && player.y < SCREEN_HEIGHT{
                         let idx = map_idx(player.x, player.y);
                         self.map.tiles[idx] = TileType::Floor;
                     }

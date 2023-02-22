@@ -7,7 +7,7 @@ pub enum TileType {
     Wall,
     Floor,
 }
-
+#[derive(Debug)]
 pub struct Map{
     pub tiles: Vec<TileType>,
 }

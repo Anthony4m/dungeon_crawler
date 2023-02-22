@@ -7,7 +7,7 @@ pub const SCREEN_HEIGHT: i32 = 50;
 }
 
 use crate::prelude::*;
-
+#[derive(Debug)]
 pub struct Player{
     pub position: Point,
 }

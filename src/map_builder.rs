@@ -28,13 +28,15 @@ impl MapBuilder {
     }
 
     fn build_random_rooms(&mut self, rng: &mut RandomNumberGenerator){
-        while self.rooms.len() < NUM_ROOMS{
+        let mut rooms_length:usize = 0;
+        while rooms_length < NUM_ROOMS{
            let room = Rect::with_size(
                 rng.range(1, SCREEN_WIDTH - 10),
                 rng.range(1, SCREEN_HEIGHT - 10),
                 rng.range(2, 10),
                 rng.range(2, 10),
             );
+            dbg!(test);
             let mut overlap = false;
             for r in self.rooms.iter(){
                 if r.intersect(&room){
@@ -49,6 +51,7 @@ impl MapBuilder {
                     }
                 });
                 self.rooms.push(room);
+                rooms_length = self.rooms.len();
             }
         }
     }
